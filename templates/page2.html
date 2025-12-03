@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>주택담보대출 신청 - 2단계</title>
+  <link rel="stylesheet" href="../static/style_2.css">
+  <link rel="stylesheet" href="../static/chat.css">
+</head>
+<body>
+  <div class="page">
+    <div class="main-card">
+
+      <!-- 상단 헤더 -->
+      <div class="header">
+        <h1>주택담보대출 신청</h1>
+        <p>필요한 정보를 입력해주세요</p>
+      </div>
+
+      <!-- 진행률 -->
+      <div class="progress-section">
+        <div class="progress-info">
+          <span>진행률</span>
+          <span class="step">2/3 단계</span>
+        </div>
+
+        <div class="progress-bar">
+          <div class="bar-fill" style="width: 50%;"></div>
+        </div>
+
+        <div class="step-tabs">
+          <div class="tab">대출 정보</div>
+          <div class="tab activate">담보 정보</div>
+          <div class="tab">소득 및 자격</div>
+        </div>
+      </div>
+
+      <!-- 입력 팝업 -->
+      <div class="popup">
+
+        <!-- 주택 가격 -->
+        <div class="form-group">
+          <label for="housePrice">🏢 주택가격</label>
+            <p class="info">※ KB시세, 감정평가액 등을 참고하여 입력해주세요</p>
+          <input type="number" id="housePrice" placeholder="예: 50000">
+
+          <div class="preset-amounts">
+            <button type="button" onclick="setPrice(300000000)">3억원</button>
+            <button type="button" onclick="setPrice(500000000)">5억원</button>
+            <button type="button" onclick="setPrice(700000000)">7억원</button>
+            <button type="button" onclick="setPrice(1000000000)">10억원</button>
+          </div>
+
+        </div>
+
+
+        <!-- 주택 소재지 -->
+         <div class="form-group">
+          <label for="houseAddress">📍 주택 소재지</label>
+          <input id="houseAddress" type="text" placeholder="예: 서울시 강남구">
+        </div>
+
+        <!-- 담보 종류 -->
+        <div class="form-group">
+          <label>🏢 담보 종류</label>
+
+          <div class="preset-amounts">
+            <button type="button" class="coll-btn" data-value="아파트">
+              <span class="title">아파트</span>
+              <span class="subtitle">아파트</span>
+            <button type="button" class="coll-btn" data-value="아파트 외">
+              <span class="title">아파트 외</span>
+              <span class="subtitle">단독/다가구/연립/빌라 등 포함</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- 이전 / 다음 버튼 -->
+        <div class="nav-buttons">
+          <button type="button" class="btn-prev" onclick="window.location.href='/page1'">이전</button>
+          <button type="button" class="btn-next" onclick="submitPage2()">다음</button>
+        </div>
+
+        <!-- 챗봇 버튼 -->
+        <div class="help-icon" id="chatBtn"></div>
+
+        <!-- 챗봇 팝업 -->
+        <div class="chat-panel" id="chatPanel">
+          <div class="chat-header">
+            <span>대출 상담</span>
+            <button id="closeChat" style="background:none;border:none;font-size:18px;cursor:pointer;">×</button>
+          </div>
+
+          <div class="chat-body" id="chatBody">
+            <div class="msg ai">안녕하세요! 무엇을 도와드릴까요?</div>
+          </div>
+
+          <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="메시지를 입력하세요">
+            <button id="sendChat">전송</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/chat.js"></script>
+  <script>
+    function setPrice(v) {
+    document.getElementById('housePrice').value = v;
+  }
+
+  // ✔ 담보 버튼 클릭 시 선택 기능
+  document.querySelectorAll('.coll-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      // 모든 버튼 active 제거
+      document.querySelectorAll('.coll-btn').forEach(b =>
+        b.classList.remove('active')
+      );
+
+      // 현재 클릭한 버튼에 active 추가
+      btn.classList.add('active');
+
+      // ✔ 선택된 담보 타입 확인 (테스트용)
+      console.log("선택한 담보 타입:", btn.dataset.value);
+    });
+  });
+
+  async function submitPage2() {
+    const housePrice = document.getElementById("housePrice").value;
+    const houseAddress = document.getElementById("houseAddress").value;
+    const collateralBtn = document.querySelector(".coll-btn.active");
+
+    if (!housePrice) {
+      alert("주택 가격을 입력해주세요");
+      return;
+    }
+    if (!houseAddress) {
+      alert("주택 소재지를 입력해주세요");
+      return;
+    }
+    if (!collateralBtn) {
+      alert("담보 종류를 선택해주세요");
+      return;
+    }
+
+    // ✔ 선택한 담보 버튼의 value 가져오기
+    const collateralType = collateralBtn.dataset.value;
+
+    const payload = {
+      housePrice: parseInt(housePrice),
+      houseAddress: houseAddress,
+      collateralType: collateralType
+    };
+
+    console.log("전송 데이터:", payload);
+
+    // FastAPI API 호출
+    await fetch("/api/page2", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    // 다음 단계로 이동
+    window.location.href = "/page3";
+  }
+  </script>
+
+</body>
+</html>

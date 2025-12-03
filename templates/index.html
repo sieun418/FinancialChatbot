@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>주택담보대출 신청 - 1단계</title>
+  <link rel="stylesheet" href="../static/style_1.css">
+  <link rel="stylesheet" href="../static/chat.css">
+</head>
+<body>
+  <div class="page">
+    <div class="main-card">
+
+      <!-- 상단 헤더 -->
+      <div class="header">
+        <h1>주택담보대출 신청</h1>
+        <p>필요한 정보를 입력해주세요</p>
+      </div>
+
+      <!-- 진행률 -->
+      <div class="progress-section">
+        <div class="progress-info">
+          <span>진행률</span>
+          <span class="step">1/3 단계</span>
+        </div>
+
+        <div class="progress-bar">
+          <div class="bar-fill"></div>
+        </div>
+
+        <div class="step-tabs">
+          <div class="tab active">대출 정보</div>
+          <div class="tab">담보 정보</div>
+          <div class="tab">소득 및 자격</div>
+        </div>
+      </div>
+
+      <!-- 입력 영역 -->
+      <div class="popup">
+
+        <!-- 대출 희망 금액 -->
+        <div class="loan-amount">
+          <label>🪙 대출 희망 금액</label>
+          <input id="loanAmount" type="number" placeholder="예: 100,000,000">
+
+          <div class="preset-amounts">
+            <button type="button" onclick="setAmount(100000000)">1억원</button>
+            <button type="button" onclick="setAmount(300000000)">3억원</button>
+            <button type="button" onclick="setAmount(500000000)">5억원</button>
+            <button type="button" onclick="setAmount(1000000000)">10억원</button>
+          </div>
+        </div>
+
+        <!-- 상환기간 (드롭다운) -->
+        <div class="form-group">
+          <label for="repaymentPeriod">📅 상환 기간</label>
+          <select id="repaymentPeriod" class="select-box">
+            <option value="">선택해주세요</option>
+            <option value="10년">10년</option>
+            <option value="15년">15년</option>
+            <option value="20년">20년</option>
+            <option value="30년">30년</option>
+          </select>
+        </div>
+
+        <!-- 금리유형 -->
+        <div class="rate-type">
+            <label>📉 금리 유형</label>
+            <div class="rate-options">
+                <button type="button" data-value="고정금리">
+                    <span class="title">고정금리</span>
+                    <span class="subtitle">기간 내 금리 고정</span>
+                </button>
+                <button type="button"data-value="변동금리">
+                    <span class="title">변동금리</span>
+                    <span class="subtitle">시장 금리에 연동</span>
+                </button>
+                <button type="button" data-value="모름">
+                    <span class="title">잘 모르겠어요</span>
+                    <span class="subtitle">추천받기</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 다음 버튼 -->
+        <div class="nav-buttons">
+          <button class="btn-next" onclick="submitPage1()">다음</button>
+        </div>
+
+        <!-- 챗봇 버튼 -->
+          <div class="help-hint">궁금한 점이 있으면 말을 걸어주세요</div>
+        <div class="help-icon" id="chatBtn"></div>
+
+        <!-- 챗봇 팝업 -->
+        <div class="chat-panel" id="chatPanel">
+          <div class="chat-header">
+            <span>대출 상담</span>
+            <button id="closeChat" style="background:none;border:none;font-size:18px;cursor:pointer;">×</button>
+          </div>
+
+          <div class="chat-body" id="chatBody">
+            <div class="msg ai">안녕하세요! 무엇을 도와드릴까요?></div>
+          </div>
+
+          <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="메시지를 입력하세요">
+            <button id="sendChat">전송</button>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <script src="../static/chat.js"></script>
+  <script>
+
+    let selectedRateType = "";
+
+    function setAmount(v) {
+      document.getElementById('loanAmount').value = v;
+    }
+
+    // 금리 버튼 클릭 시 선택 기능
+    document.querySelectorAll('.rate-options button').forEach(btn => {
+     btn.addEventListener('click', () => {
+       // 모든 버튼 active 제거
+       document.querySelectorAll('.rate-options button').forEach(b =>
+         b.classList.remove('active')
+       );
+
+       btn.classList.add('active');
+       selectedRateType = btn.dataset.value;
+     });
+    });
+
+    async function submitPage1() {
+      const loanAmount = document.getElementById("loanAmount").value;
+      const repaymentPeriod = document.getElementById("repaymentPeriod").value;
+
+      if (!loanAmount) {
+        alert("대출 금액을 입력해주세요");
+        return;
+      }
+      if (!repaymentPeriod) {
+        alert("상환 기간을 선택해주세요");
+        return;
+      }
+
+      if (!selectedRateType) {
+            alert("금리 유형을 선택해주세요");
+            return;
+      }
+
+      const payload = {
+        loanAmount: loanAmount,
+        repaymentPeriod: repaymentPeriod,
+        rateType: selectedRateType
+      };
+
+      // FastAPI 요청
+      await fetch("/api/page1", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      // 다음 페이지로 이동
+      window.location.href = "/page2";
+    }
+  </script>
+
+</body>
+</html>

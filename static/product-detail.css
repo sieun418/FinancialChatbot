@@ -1,0 +1,208 @@
+body {
+  margin: 0;
+  background: #F9FAFB;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* 상단 목록 버튼 */
+.top-bar {
+  margin-bottom: 16px;
+}
+
+.top-bar button {
+  padding: 10px 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  background-color: #F9FAFB;
+  color: #4A5565;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+/* 카드 기본 스타일 */
+.product-card {
+  background: #FFFFFF;
+  padding: 20px;
+  border-radius: 14px;
+  transition: all 0.2s;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  margin-bottom: 16px;
+}
+
+/* 메인 카드 스타일 */
+#mainCard {
+  background: linear-gradient(135deg, #FF8C7D, #FE7F6E);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  padding: 24px;
+}
+
+/* 카드 내부 정보 */
+.bank-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.bank-name {
+  font-size: 20px;
+  font-weight: 500;
+  color: inherit;
+}
+
+.badge {
+  background: rgba(255,255,255,0.3);
+  color: white;
+  padding: 2px 6px;
+  font-size: 11px;
+  border-radius: 10px;
+}
+
+.product-name {
+  font-size: 16px;
+  color: inherit;
+  margin: 2px 0 16px;
+}
+
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-top: 48px;          /* 위쪽 간격 */
+  padding-top: 12px;          /* border와 내용 사이 간격 */
+  border-top: 1px solid rgba(255, 255, 255, 0.3); /* info-row 위 선 */
+}
+
+.rate-section,
+.limit-section {
+  text-align: left;
+}
+
+.rate-value,
+.limit-value {
+  font-size: 24px;
+  margin: 2px 0;
+  color: inherit;
+}
+
+.label {
+  font-size: 11px;
+  margin: 2px 0 4px 0;
+  color: inherit;
+}
+
+/* 상품 설명 카드 */
+#descriptionCard {
+  padding: 20px;
+}
+
+#descriptionCard h3 {
+  font-size: 15px;
+  color: #495565;
+  font-weight: 500;
+  margin: 0 0 16px; /* 제목과 내용 간격 조정 */
+}
+
+#productDescription {
+  font-size: 13px;
+  color: #364153;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0;
+}
+
+#documentCard {
+  padding: 20px;
+}
+
+#documentCard h3 {
+  font-size: 15px;
+  color: #495565;
+  font-weight: 500;
+  margin: 0 0 16px; /* 제목과 내용 간격 조정 */
+}
+
+#required-documents {
+  font-size: 13px;
+  color: #364153;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.doc-notice {
+  margin-top: 8px;
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  background: #f7f7f7;
+  border-left: 2px solid #fe7f6e; /* 포인트 컬러 */
+  border-radius: 6px;
+  font-size: 13px;
+  color: #6b7280; /* 회색 텍스트 */
+  line-height: 1.4;
+}
+
+/* 하단 버튼 */
+.bottom-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.bottom-buttons button {
+  flex: 1;
+  padding: 14px 0;
+  border: none;
+  border-radius: 8px;
+  background-color: #fe7f6e;
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  opacity: 0.3;              /* 기본 투명도 */
+  transition: opacity 0.3s;   /* 부드럽게 전환 */
+}
+
+.bottom-buttons button:last-child {
+  background-color: #aaa;
+}
+
+/* Hover 시 투명도 변경 */
+.bottom-buttons button:hover {
+  opacity: 1;
+}
+
+/* 카드 hover 효과 */
+.product-card:hover {
+  border-color: #D1D5DB;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+
+/* 공통 fade-up 애니메이션 */
+.fade-up {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.fade-up.show {
+  opacity: 1;
+  transform: translateY(0);
+}

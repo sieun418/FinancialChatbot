@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>추천 대출 상품</title>
+  <link rel="stylesheet" href="../static/loan-products.css">
+  <link rel="stylesheet" href="../static/chat.css">
+</head>
+
+<body>
+  <div class="container">
+
+      <!-- 추천 상품 페이지 -->
+    <div id="productPage" class="product-page">
+      <div class="header">
+        <div class="title-row">
+          <h1>추천 상품</h1>
+        </div>
+        <p id="productCount" class="subtitle"></p>
+      </div>
+
+      <div id="productList" class="product-list"></div>
+
+      <p class="notice">최종 금리는 심사 결과에 따라 달라질 수 있어요</p>
+    </div>
+
+
+       <!-- 챗봇 버튼 -->
+      <div class="help-hint">궁금한 점이 있으면 말을 걸어주세요</div>
+        <div class="help-icon" id="chatBtn"></div>
+
+        <!-- 챗봇 팝업 -->
+        <div class="chat-panel" id="chatPanel">
+          <div class="chat-header">
+            <span>대출 상담</span>
+            <button id="closeChat" style="background:none;border:none;font-size:18px;cursor:pointer;">×</button>
+          </div>
+
+          <div class="chat-body" id="chatBody">
+            <div class="msg ai">안녕하세요! 무엇을 도와드릴까요?</div>
+          </div>
+
+          <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="메시지를 입력하세요">
+            <button id="sendChat">전송</button>
+          </div>
+        </div>
+
+
+  </div>
+
+  <script src="/static/chat.js"></script>
+  <script src="../static/loan-products.js"></script>
+</body>
+</html>

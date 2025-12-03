@@ -1,0 +1,313 @@
+/* 전체 페이지 */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Noto Sans KR', sans-serif;
+  background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 100%),
+              linear-gradient(128deg, rgba(255,255,255,1) 0%, rgba(255,247,222,1) 100%);
+}
+
+.page {
+  min-width: 1440px;
+  min-height: 1024px;
+  display: flex;
+  justify-content: center;
+  padding-top: 40px;
+  position: relative;
+}
+
+/* 중앙 카드 */
+.main-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 768px;
+}
+
+/* 제목 */
+.header {
+  text-align: center;
+}
+
+.header h1 {
+  font-size: 30px;
+  font-weight: bold;
+  color: #fe7f6e;
+  margin: 0;
+}
+
+.header p {
+  font-size: 16px;
+  color: #495565;
+  margin: 8px 0 0 0;
+}
+
+/* 진행률 */
+.progress-section {
+  padding: 20px 0;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between; /* 왼쪽/오른쪽 배치 */
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.progress-bar .bar-fill {
+  width: 33%; /* 2/3단계이면 66% */
+  height: 100%;
+  background-color: #fe7f6e;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.step-tabs {
+  display: flex;
+  justify-content: space-between;
+}
+
+.step-tabs .tab {
+  flex: 1;
+  text-align: center;
+  font-size: 13px;
+  color: #888;
+  padding: 5px 0;
+  position: relative;
+}
+
+.step-tabs .tab.active {
+  font-weight: 500;
+  color: #495565;
+}
+
+.step-tabs .tab:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 12px;
+  background-color: #ccc;
+}
+
+
+/* 팝업 */
+.popup {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 32px;
+  box-shadow:
+    0px 8px 10px -6px rgba(0,0,0,0.18),
+    0px 20px 25px -5px rgba(0,0,0,0.22);
+
+}
+
+/* 대출 금액 */
+.loan-amount label {
+  display: block;
+  font-size: 14px;
+  color: #364153;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.loan-amount input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  font-size: 14px;
+  color: #717182;
+  border: 1px solid #E5E7EB;
+  background: #F9FAFB;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+.preset-amounts {
+  display: flex;
+  gap: 12px;
+}
+
+.preset-amounts button {
+  flex: 1;
+  height: 37px;
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  background: #fff;
+  font-size: 14px;
+  color: #101727;
+  cursor: pointer;
+}
+
+.preset-amounts button:hover,
+.preset-amounts button:hover {
+  background-color: #fe7f6e;
+  border-color: #fe7f6e;
+  color: #fff;
+}
+
+/* 상환기간 */
+.form-group {
+  margin-top: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  color: #364153;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.select-box {
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #717182;                    /* 글씨 색상 */
+  border: 1px solid #E5E7EB;         /* 연한 회색 테두리 */
+  border-radius: 12px;                /* 둥글기 */
+  background-color: #F9FAFB;
+  appearance: none;                   /* 기본 화살표 제거 */
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23697282' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.select-box:hover {
+  border-color: #FE7F6E;   /* hover 시 테두리 강조 */
+  box-shadow: 0 4px 8px rgba(254,127,110,0.2); /* 살짝 그림자 */
+}
+
+.select-box:focus {
+  outline: none;
+  border-color: #FE7F6E;
+  box-shadow: 0 0 0 2px rgba(254,127,110,0.2); /* 포커스 강조 */
+}
+
+/* 다음 버튼 */
+.btn-next {
+  width: 100%;
+  height: 48px;
+  background: #fe7f6e;
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-size: 14px;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.btn-next:hover {
+  opacity: 1;
+}
+
+/* 우측 하단 버튼 */
+.btn-bottom-right {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 64px;
+  height: 64px;
+  background: #fe7f6e;
+  border-radius: 50%;
+  border: none;
+  color: #fff;
+  font-size: 28px;
+  cursor: pointer;
+  box-shadow: 0px 25px 50px -12px rgba(0,0,0,0.25);
+}
+
+/* 금리 유형 선택 */
+.rate-type {
+  margin-top: 20px;
+}
+
+.rate-type label {
+  display: block;
+  font-size: 14px;
+  color: #364153;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.rate-options {
+  display: flex;
+  gap: 12px;
+}
+
+.rate-options button {
+  flex: 1;
+  height: 100px;
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 18px 18px;
+  gap: 4px;
+}
+
+.rate-options button .title {
+  font-size: 14px;
+  font-weight: 400;
+  color: #101727;
+}
+
+.rate-options button .subtitle {
+  font-size: 12px;
+  color: #777;
+}
+
+.rate-options button:hover {
+  background-color: #fe7f6e;
+  border-color: #fe7f6e;
+  color: #fff;
+}
+
+.rate-options button:hover .title {
+    color: #fff;
+}
+
+.rate-options button:hover .subtitle {
+    color: #fff;
+    opacity:0.7;
+}
+
+.rate-options button.active {
+  background-color: #fe7f6e;
+  border-color: #fe7f6e;
+}
+
+.rate-options button.active .title{
+    color: #fff;
+}
+
+.rate-options button.active .subtitle{
+    color: #fff;
+    opacity:0.7;
+}

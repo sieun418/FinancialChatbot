@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>주택담보대출 신청 - 3단계</title>
+  <link rel="stylesheet" href="/static/style_3.css">
+  <link rel="stylesheet" href="/static/chat.css">
+</head>
+<body>
+  <div class="page">
+    <div class="main-card">
+
+      <!-- 상단 헤더 -->
+      <div class="header">
+        <h1>주택담보대출 신청</h1>
+        <p>필요한 정보를 입력해주세요</p>
+      </div>
+
+      <!-- 진행률 -->
+      <div class="progress-section">
+        <div class="progress-info">
+          <span>진행률</span>
+          <span class="step">3/3 단계</span>
+        </div>
+
+        <div class="progress-bar">
+          <div class="bar-fill" style="width: 100%;"></div>
+        </div>
+
+        <div class="step-tabs">
+          <div class="tab">대출 정보</div>
+          <div class="tab">담보 정보</div>
+          <div class="tab activate">소득 및 자격</div>
+        </div>
+      </div>
+
+      <!-- 입력 팝업 -->
+      <div class="popup">
+
+        <!-- 연소득 -->
+        <div class="form-group">
+          <label>💰 연소득</label>
+          <div class="option-buttons income-buttons">
+            <button type="button" onclick="selectIncome('3000만원 미만', this)">3000만원 미만</button>
+            <button type="button" onclick="selectIncome('3000~5000', this)">3000~5000만원</button>
+            <button type="button" onclick="selectIncome('5000~7000', this)">5000~7000만원</button>
+            <button type="button" onclick="selectIncome('7000~1억', this)">7000만원~1억원</button>
+            <button type="button" onclick="selectIncome('1억~1억5000', this)">1억원~1억5000만원</button>
+            <button type="button" onclick="selectIncome('1억5000 이상', this)">1억5000만원 이상</button>
+          </div>
+        </div>
+
+        <!-- 보유주택수 -->
+        <div class="form-group">
+          <label>🏢 보유주택수</label>
+          <div class="option-buttons three-grid house-buttons">
+            <button type="button" onclick="selectHousing('무주택', this)">무주택</button>
+            <button type="button" onclick="selectHousing('1주택', this)">1주택</button>
+            <button type="button" onclick="selectHousing('다주택', this)">다주택</button>
+          </div>
+        </div>
+
+        <!-- 생애최초 주택 구입 여부 -->
+        <div class="form-group">
+          <label>🗓 생애최초 주택 구입 여부</label>
+          <div class="option-buttons first-home-buttons">
+            <button type="button" onclick="selectFirstHome('예', this)">
+              <span class="title">예</span>
+              <span class="subtitle">생애 처음 주택을 구입합니다</span>
+            <button type="button" onclick="selectFirstHome('아니오', this)">
+              <span class="title">아니오</span>
+              <span class="subtitle">이전에 주택을 구입한적이 있습니다</span>
+            </button>
+          </div>
+          <p class="info-text">※ 생애최초 주택 구입시 금리 우대 혜택을 받을 수 있습니다.</p>
+        </div>
+
+        <!-- 이전 / 다음 버튼 -->
+        <div class="nav-buttons">
+          <button type="button" class="btn-prev" onclick="window.location.href='/page2'">이전</button>
+          <button type="button" class="btn-next" onclick="submitPage3()">다음</button>
+        </div>
+
+        <!-- 챗봇 버튼 -->
+        <div class="help-hint">궁금한 점이 있으면 말을 걸어주세요</div>
+        <div class="help-icon" id="chatBtn"></div>
+
+        <!-- 챗봇 팝업 -->
+        <div class="chat-panel" id="chatPanel">
+          <div class="chat-header">
+            <span>대출 상담</span>
+            <button id="closeChat" style="background:none;border:none;font-size:18px;cursor:pointer;">×</button>
+          </div>
+
+          <div class="chat-body" id="chatBody">
+            <div class="msg ai">안녕하세요! 무엇을 도와드릴까요?</div>
+          </div>
+
+          <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="메시지를 입력하세요">
+            <button id="sendChat">전송</button>
+          </div>
+        </div>
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+   <script src="/static/chat.js"></script>
+   <script>
+
+    let selectedIncome = "";
+    let selectedHousing = "";
+    let selectedFirstHome = "";
+
+    // 연소득 선택
+    function selectIncome(value, btn) {
+      selectedIncome = value;
+
+      // 모든 버튼에서 active 제거
+      document.querySelectorAll('.income-buttons button')
+              .forEach(b => b.classList.remove('active'));
+
+      // 클릭한 버튼만 active 적용
+      btn.classList.add('active');
+    }
+
+    // 보유주택수 선택
+    function selectHousing(value, btn) {
+      selectedHousing = value;
+      document.querySelectorAll('.house-buttons button')
+              .forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    // 생애최초 주택 선택
+    function selectFirstHome(value, btn) {
+      selectedFirstHome = value;
+      document.querySelectorAll('.first-home-buttons button')
+              .forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    // 제출
+    async function submitPage3() {
+      if (!selectedIncome) { alert("연소득을 선택해주세요"); return; }
+      if (!selectedHousing) { alert("보유주택수를 선택해주세요"); return; }
+      if (!selectedFirstHome) { alert("생애최초 주택 구입 여부를 선택해주세요"); return; }
+
+      const payload = {
+        income: selectedIncome,
+        housingCount: selectedHousing,
+        firstHome: selectedFirstHome
+      };
+
+      await fetch("/api/page3", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      window.location.href = "/loan_analysis";
+    }
+  </script>
+
+</body>
+</html>

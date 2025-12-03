@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 상품 분석</title>
+  <link rel="stylesheet" href="/static/loan-analysis.css">
+</head>
+<body>
+
+<div id="popup-container" class="popup-overlay">
+  <div class="popup">
+
+    <!-- Header -->
+    <div class="popup-header">
+      <div>
+        <h2 class="title">대출 상품 분석</h2>
+        <p class="subtitle">최적의 상품을 찾고 있어요</p>
+      </div>
+      <div id="header-icons" class="pulse-dots">
+        <div class="dot"></div>
+        <div class="dot delay-1"></div>
+        <div class="dot delay-2"></div>
+      </div>
+    </div>
+
+    <!-- Messages -->
+    <div id="message-area" class="message-area"></div>
+
+    <!-- Footer -->
+    <div class="popup-footer">
+
+      <button id="complete-btn" class="complete-btn hidden">
+        추천 상품 확인하기 →
+      </button>
+
+      <div class="chat-input">
+        <input id="chat-input" type="text" placeholder="궁금한 점을 물어보세요" />
+        <button id="send-btn">➤</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="/static/loan-analysis.js"></script>
+<script>
+
+  </script>
+
+</body>
+</html>

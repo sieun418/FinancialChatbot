@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>상품 상세</title>
+  <link rel="stylesheet" href="../static/product-detail.css">
+    <link rel="stylesheet" href="../static/chat.css">
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- 상단: 목록으로 돌아가기 -->
+    <div class="top-bar">
+      <button id="backBtn">← 목록으로</button>
+    </div>
+
+    <!-- 카드 팝업: 필수 정보 -->
+    <div class="product-card" id="mainCard">
+        <div class="bank-row">
+            <div class="bank-name" id="bankName">은행명</div>
+        </div>
+
+       <div class="product-name" id="productName">상품명</div>
+       <div class="info-row">
+        <div class="rate-section">
+          <p class="label">예상 금리</p>
+          <p class="rate-value" id="rateRange">0% ~ 0%</p>
+        </div>
+
+        <div class="limit-section">
+          <p class="label">월 상환액</p>
+          <p class="limit-value" id="monthlyPayment">0원</p>
+        </div>
+
+        <div class="limit-section">
+          <p class="label">최대 한도</p>
+          <p class="limit-value" id="loanLimit">0원</p>
+        </div>
+       </div>
+    </div>
+
+    <!-- 상품 설명 카드 -->
+    <div class="product-card" id="descriptionCard">
+      <h3>상품 설명</h3>
+      <p id="productDescription">상품에 대한 간단한 설명이 여기에 표시됩니다.</p>
+    </div>
+
+      <!-- 필요 서류  -->
+     <div class="product-card" id="documentCard">
+      <h3>필요 서류</h3>
+
+      <div class="doc-notice">
+        ※ 아래 내용은 참고용 안내이며, 정확한 필요서류는 은행에 직접 확인하셔야 해요.
+      </div>
+
+      <p id="required-documents">필요한 서류가 여기에 표시됩니다.</p>
+    </div>
+    <!-- 하단 버튼 -->
+    <div class="bottom-buttons">
+      <button id="otherProductsBtn">다른 상품 보기</button>
+      <button id="homeBtn">홈으로 돌아가기</button>
+    </div>
+
+
+        <!-- 챗봇 버튼 -->
+        <div class="help-icon" id="chatBtn"></div>
+
+        <!-- 챗봇 팝업 -->
+        <div class="chat-panel" id="chatPanel">
+          <div class="chat-header">
+            <span>대출 상담</span>
+            <button id="closeChat" style="background:none;border:none;font-size:18px;cursor:pointer;">×</button>
+          </div>
+
+          <div class="chat-body" id="chatBody">
+            <div class="msg ai">안녕하세요! 무엇을 도와드릴까요?</div>
+          </div>
+
+          <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="메시지를 입력하세요">
+            <button id="sendChat">전송</button>
+          </div>
+        </div>
+
+  </div>
+
+  <script src="/static/chat.js"></script>
+  <script src="../static/product-detail.js"></script>
+</body>
+</html>

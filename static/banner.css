@@ -1,0 +1,79 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: #EEE9DA;
+  overflow: hidden;
+}
+
+
+
+#experience{
+position: fixed;
+height: 100%
+width: 100%
+top: 0;
+left: 0;
+overflow: hidden:
+}
+
+#experience-canvas{
+display: block;
+width: 100%
+height: 100%
+
+}
+
+/* 상단 텍스트 */
+.header {
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  text-align: center;
+  color: #FE7F6E;
+  z-index: 10;
+}
+
+.header h1 {
+  font-size: 10px;
+  font-weight: 500;
+  margin-bottom: 0px;
+}
+
+.header p {
+  font-size: 8px;
+  opacity: 0.8;
+}
+
+/* 하단 버튼 */
+.footer {
+  position: relative;
+  bottom: 250px;
+  text-align: center;
+  z-index: 10;
+}
+
+.footer button {
+  background-color: #E5E1D3;
+  color: #FE7F6E;
+  font-size: 35px;
+  font-weight: 600;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+  opacity : 0.6;
+}
+
+.footer button:hover {
+  background-color: #ff9b85;
+  color: #fff;
+  opacity : 1;
+}

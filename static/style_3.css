@@ -1,0 +1,250 @@
+/* 페이지 기본 설정 */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Noto Sans KR', sans-serif;
+  background: linear-gradient(0deg, #fff 0%, #fff 100%),
+              linear-gradient(128deg, #fff 0%, #fff7de 100%);
+}
+
+.page {
+  min-width: 1440px;
+  min-height: 1024px;
+  display: flex;
+  justify-content: center;
+  padding-top: 40px;
+}
+
+/* 중앙 카드 */
+.main-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 768px;
+}
+
+/* 헤더 */
+.header {
+  text-align: center;
+}
+
+.header h1 {
+  font-size: 30px;
+  font-weight: bold;
+  color: #fe7f6e;
+  margin: 0;
+}
+
+.header p {
+  font-size: 16px;
+  color: #495565;
+  margin: 8px 0 0 0;
+}
+
+/* 진행률 */
+.progress-section {
+  padding: 20px 0;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: #E6E6E8;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.progress-bar .bar-fill {
+  width: 100%;
+  height: 100%;
+  background-color: #fe7f6e;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.step-tabs {
+  display: flex;
+  justify-content: space-between;
+}
+
+.step-tabs .tab {
+  flex: 1;
+  text-align: center;
+  font-size: 13px;
+  color: #888;
+  padding: 5px 0;
+  position: relative;
+}
+
+.step-tabs .tab.active {
+  font-weight: 500;
+  color: #495565;
+}
+
+.step-tabs .tab:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 12px;
+  background-color: #ccc;
+}
+
+/* 팝업 카드 */
+.popup {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  background-color: #fff;
+  border-radius: 14px;
+  padding: 32px;
+  box-shadow:
+    0px 8px 10px -6px rgba(0,0,0,0.18),
+    0px 20px 25px -5px rgba(0,0,0,0.22);
+
+}
+
+/* Form Label */
+.form-group label {
+  display: block;
+  font-size: 14px;
+  color: #364153;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+/* 안내 텍스트 */
+.info-text {
+  font-size: 12px;
+  color: #697282;
+  margin-top: 6px;
+}
+
+/* 옵션 버튼 공통 스타일 */
+.option-buttons {
+  display: grid;
+  gap: 12px;
+}
+
+.option-buttons button {
+  width: 100%;
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  background: #fff;
+  font-size: 14px;
+  color: #101727;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.option-buttons button:hover,
+.option-buttons button.active {
+  background-color: #fe7f6e;
+  border-color: #fe7f6e;
+  color: #fff;
+}
+
+/* 연소득 버튼 */
+.option-buttons.income-buttons {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.option-buttons.income-buttons button {
+  height: 48px;
+}
+
+/* 주택 보유수 버튼 */
+.option-buttons.house-buttons {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.option-buttons.house-buttons button {
+  height: 74px;
+}
+
+/* 생애최초 주택 구입 여부 버튼 */
+.first-home-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.first-home-buttons button {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.first-home-buttons button:hover,
+.first-home-buttons button.active {
+  background-color: #fe7f6e;
+  border-color: #fe7f6e;
+  color: #fff;
+}
+
+.first-home-buttons .title {
+  font-size: 16px;
+  font-weight: 500 ;
+}
+
+.first-home-buttons .subtitle {
+  font-size: 12px;
+  color: #697282;
+  margin-top: 4px;
+  text-align: center;
+}
+
+
+
+
+/* 이전/다음 버튼 */
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+  gap: 8px;
+}
+
+.nav-buttons button {
+  flex: 1;
+  height: 48px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-prev {
+  background-color: #fff;
+  border: 0.57px solid #ccc;
+  color: #495565;
+}
+
+.btn-prev:hover {
+  background-color: #f0f0f0;
+}
+
+.btn-next {
+  background-color: #fe7f6e;
+  color: #fff;
+}
+
+.btn-next:hover {
+  opacity: 0.9;
+}
