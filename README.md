@@ -39,4 +39,89 @@
 ---
 
 ## 🏗️ System Architecture
+User
+↓
+FastAPI (Jinja2 Templates)
+↓
+Input Parsing
+↓
+Policy Engine (LTV / DTI / DSR)
+↓
+Product Matching (SQLite)
+↓
+LangGraph Reasoning Agent
+↓
+Recommendation Result (웹 UI)
+
+## 📁 Project Structure
+project/
+│
+├── server.py # FastAPI 서버 엔트리
+├── rec_product_logic_conv_F.py # 정책 계산 + 추천 로직
+│
+├── database/
+│ ├── product.db # 금융상품 DB
+│ ├── policy_rules.db # 정책 규정 DB
+│
+├── templates/
+│ ├── page1.html # 사용자 입력 페이지
+│ ├── page2.html
+│ ├── result.html # 추천 결과 페이지
+│
+├── static/
+│ ├── css/
+│ └── js/
+│
+└── README.md
+## 🧮 Policy Calculation
+✔ LTV (Loan-to-Value)
+조건	적용 LTV
+생애최초	최대 80%
+무주택/1주택	70%
+투기지역	40%
+조정대상지역	50%
+비규제지역	70%
+✔ DSR (Debt Service Ratio)
+DSR = (총부채 원리금 상환액 / 연소득) × 100
+은행권 기본 규제는 40%
+
+✔ Final Loan Limit
+대출 가능 금액 = min( LTV 기반 가능액, DSR 기반 가능액 )
+
+## 🤖 LangGraph Reasoning Flow
+
+사용자 입력 파싱
+
+결격요건 확인
+
+정책(LTV/DTI/DSR) 계산
+
+상품 후보군 생성(SQLite 기반)
+
+LangGraph Agent가 상품 비교 및 설명 생성
+
+결과 페이지로 렌더링
+
+## 🔧 Tech Stack
+
+Backend: FastAPI
+
+AI: LangChain, LangGraph, OpenAI API
+
+Database: SQLite
+
+Frontend: HTML(Jinja2 Templates)
+
+Environment: Python 3.10+
+
+## 🛠️ Future Improvements
+
+월 상환액 계산 및 상환 스케줄러 UI 추가
+
+우대금리 조건 자동 반영
+
+상품 DB 확장(은행별 금리 Tiers)
+
+대출 시나리오 기반 사용자 맞춤 금융 코치 기능
+
 
