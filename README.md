@@ -55,23 +55,41 @@ Recommendation Result (웹 UI)
 
 ## 📁 Project Structure
 project/
+
 │
+
 ├── server.py # FastAPI 서버 엔트리
+
 ├── rec_product_logic_conv_F.py # 정책 계산 + 추천 로직
+
 │
+
 ├── database/
+
 │ ├── product.db # 금융상품 DB
+
 │ ├── policy_rules.db # 정책 규정 DB
+
 │
+
 ├── templates/
+
 │ ├── page1.html # 사용자 입력 페이지
+
 │ ├── page2.html
+
 │ ├── result.html # 추천 결과 페이지
+
 │
+
 ├── static/
+
 │ ├── css/
+
 │ └── js/
+
 │
+
 └── README.md
 ## 🧮 Policy Calculation
 ✔ LTV (Loan-to-Value)
