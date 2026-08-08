@@ -1,145 +1,204 @@
-# 🏠 FinancialChatbot
-### AI 기반 주택담보대출 상품 추천 서비스
-**FastAPI · LangChain/LangGraph · SQLite**
+# AI 기반 주택담보대출 상품 추천 챗봇
 
----
+사용자의 소득, 주택 가격, 대출 목적 등 조건을 바탕으로 적합한 주택담보대출 상품을 추천하고, 관련 약관과 정책을 근거로 추천 이유를 설명하는 AI 상담 서비스입니다.
 
-## 📌 Overview
-**MortgageAI**는 사용자가 입력한 재무·부동산 정보를 분석하여,  
-은행별 **주택담보대출 상품을 추천**하고 **LTV·DTI·DSR 정책을 기반으로 대출 가능액을 분석**하는 대화형 금융 서비스입니다.
+규칙 기반 필터링과 스코어링으로 추천 상품을 결정하고, LLM은 검색된 금융 정보를 바탕으로 결과를 설명하도록 구성했습니다.
 
-본 프로젝트는 KDT AI Academy 과정에서 수행되었으며,  
-실제 금융 정책과 상품 구조를 반영하여 **현실성 있는 추천 알고리즘**을 구현하는 것을 목표로 합니다.
+## 프로젝트 개요
 
----
+주택담보대출 상품은 은행별 조건이 복잡하고 정책과 규제가 자주 변경됩니다. 사용자가 여러 상품과 약관을 직접 비교해야 하며, 상담 과정에서 개인정보 제공이나 신용조회가 요구될 수 있다는 부담도 있습니다.
 
-## ✨ Features
+본 프로젝트는 신용조회 없이 사용자가 입력한 조건만으로 대출 상품을 탐색하고, 추천 결과와 관련 근거를 대화형으로 확인할 수 있도록 기획했습니다.
 
-### ⭐ 1. 대출 상품 자동 추천 엔진
-- 사용자 입력 기반(담보가액, 필요 대출금, 소득, 부채 등)
-- SQLite에 저장된 금융상품 DB 기반 추천
-- 금리, 한도, 조건 등 비교 후 Top-N 상품 제시
+* 개발 기간: 2025.11.03 ~ 2025.11.28
+* 개발 인원: 6명
+* 담당 역할: Backend
+* 주요 기술: FastAPI, LangChain, OpenAI API, SQLite
 
-### ⭐ 2. 금융정책 계산 엔진 (LTV · DTI · DSR)
-- 금융감독원 기준 반영
-- 규제지역/비규제지역 정책 차등 적용
-- 생애최초, 무주택, 1주택, 신혼부부 등 특성 반영
-- 정책 계산 결과가 실제 추천 로직에 직접 사용됨
+## 주요 기능
 
-### ⭐ 3. LangChain & LangGraph 기반 Reasoning
-- 다단계 추론 구조(Multi-step Reasoning)
-- 상품 비교·설명 및 금융 용어 해석 자동 생성
-- 사용자 조건에 맞춘 자연어 기반 금융 가이드 제공
+### 사용자 조건 기반 상품 추천
 
-### ⭐ 4. FastAPI + Jinja2 기반 웹 UI
-- `/page1 → page2 → result` 흐름의 사용자 입력 단계 구성
-- 서버 내부에서 정책 계산 → 추천 → 결과 시각화  
-- REST API 없이 템플릿 렌더링 방식으로 서비스 운영
+사용자가 입력한 소득, 주택 가격, 대출 목적, 상환 조건 등을 바탕으로 신청 가능한 상품을 선별합니다.
 
----
+### 규칙 기반 필터링 및 스코어링
 
-## 🏗️ System Architecture
-User
-↓
-FastAPI (Jinja2 Templates)
-↓
-Input Parsing
-↓
-Policy Engine (LTV / DTI / DSR)
-↓
-Product Matching (SQLite)
-↓
-LangGraph Reasoning Agent
-↓
-Recommendation Result (웹 UI)
+상품별 필수 자격요건을 충족하지 못한 상품을 우선 제외한 뒤, 금리와 한도 등의 기준에 따라 적합도 점수를 계산합니다.
 
-## 📁 Project Structure
-project/
+| 평가 기준     | 가중치 |
+| --------- | --: |
+| 금리 경쟁력    | 50% |
+| 대출 한도 여유  | 20% |
+| 금리 유형 적합도 | 15% |
+| 상환 기간 적합도 | 15% |
 
-│
+### 근거 기반 추천 설명
 
-├── server.py # FastAPI 서버 엔트리
+약관 및 정책 문서에서 사용자 질문과 관련된 정보를 검색하고, 검색 결과를 LLM의 Context로 전달해 추천 이유와 유의사항을 생성합니다.
 
-├── rec_product_logic_conv_F.py # 정책 계산 + 추천 로직
+### 후속 상담
 
-│
+추천 결과에 관한 추가 질문을 입력하면 상품 정보와 약관·정책 데이터를 바탕으로 답변을 제공합니다.
 
-├── database/
+## 시스템 구조
 
-│ ├── product.db # 금융상품 DB
+```mermaid
+flowchart LR
+    A["Web Browser"] -->|사용자 조건| B["FastAPI"]
+    B --> C["Rule Engine"]
+    C --> D["Product DB"]
+    B --> E["Retriever"]
+    E --> F["Policy DB"]
+    D --> G["LangChain"]
+    F --> G
+    G --> H["OpenAI API"]
+    H -->|추천 설명| B
+    B -->|추천 결과| A
+```
 
-│ ├── policy_rules.db # 정책 규정 DB
+1. 사용자가 대출 조건을 입력합니다.
+2. FastAPI 서버가 입력값을 검증하고 추천 엔진을 호출합니다.
+3. Rule Engine이 자격요건을 기준으로 상품을 필터링합니다.
+4. Scoring Model이 상품별 적합도 점수를 계산합니다.
+5. 관련 상품·약관·정책 정보를 검색합니다.
+6. 검색 결과를 LLM의 Context로 전달해 추천 근거를 생성합니다.
+7. 추천 상품과 설명을 사용자에게 반환합니다.
 
-│
+## 추천 프로세스
 
-├── templates/
+### 1. Rule Filtering
 
-│ ├── page1.html # 사용자 입력 페이지
+정책 및 상품별 필수 조건을 기준으로 신청이 어려운 상품을 제외합니다.
 
-│ ├── page2.html
+* 사용자 연령
+* 연 소득
+* 주택 가격
+* 대출 목적
+* 생애 최초 주택 구입 여부
+* 신혼부부 여부
+* 정책상품별 자격요건
 
-│ ├── result.html # 추천 결과 페이지
+### 2. Product Scoring
 
-│
+필터링을 통과한 상품을 대상으로 적합도 점수를 계산하고 추천 순위를 결정합니다.
 
-├── static/
+```text
+Score =
+    금리 경쟁력 × 0.50
+  + 대출 한도 여유 × 0.20
+  + 금리 유형 적합도 × 0.15
+  + 상환 기간 적합도 × 0.15
+```
 
-│ ├── css/
+### 3. Recommendation Explanation
 
-│ └── js/
+추천 결과와 관련된 상품 정보, 약관 및 정책 내용을 LLM에 제공하여 사용자가 이해하기 쉬운 설명을 생성합니다.
 
-│
+## 기술 스택
 
+| 구분            | 기술                    |
+| ------------- | --------------------- |
+| Backend       | Python, FastAPI       |
+| LLM           | OpenAI API, GPT-4o    |
+| LLM Framework | LangChain             |
+| Retrieval     | TF-IDF, scikit-learn  |
+| Database      | SQLite                |
+| Frontend      | HTML, CSS, JavaScript |
+| Collaboration | Git, GitHub           |
+
+## 담당 역할
+
+백엔드 개발을 담당하여 사용자 요청부터 추천 결과 반환까지의 서비스 흐름을 구현했습니다.
+
+* FastAPI 기반 추천 및 상담 API 구현
+* 사용자 입력값 검증과 응답 데이터 구조 설계
+* 규칙 기반 추천 엔진과 API 서버 연동
+* 상품·약관·정책 데이터 조회 로직 연결
+* LangChain 기반 검색 및 LLM 응답 흐름 구현
+* 프론트엔드와 백엔드 API 통합
+
+## 데이터 구성
+
+추천 정확성과 데이터 관리의 편의성을 위해 데이터를 용도에 따라 분리했습니다.
+
+* `Product DB`: 은행별 주택담보대출 상품 정보 및 추천 조건
+* `Policy DB`: 대출 관련 약관, 정책, 규제 및 자격요건
+
+약관 및 정책 문서는 문서 구조에 따라 분할하고, TF-IDF 기반 검색을 통해 사용자 질문과 관련된 내용을 선별합니다.
+
+## 실행 방법
+
+### 1. Repository Clone
+
+```bash
+git clone <!-- 저장소 URL -->
+cd <!-- 프로젝트 폴더명 -->
+```
+
+### 2. Package Installation
+
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Environment Variables
+
+프로젝트 루트에 `.env` 파일을 생성하고 OpenAI API Key를 입력합니다.
+
+```env
+OPENAI_API_KEY=your_api_key
+```
+
+### 4. Server 실행
+
+```bash
+uvicorn main:app --reload
+```
+
+실행 후 아래 주소에서 API 문서를 확인할 수 있습니다.
+
+```text
+http://localhost:8000/docs
+```
+
+> 실제 실행 파일의 위치에 따라 `main:app` 경로가 달라질 수 있습니다.
+
+## 프로젝트 구조
+
+```text
+.
+├── app/
+│   ├── api/               # API Endpoint
+│   ├── services/          # 추천 및 LLM 서비스
+│   ├── recommendation/    # 필터링·스코어링 로직
+│   ├── retrieval/         # 약관·정책 검색
+│   ├── models/            # 요청·응답 데이터 모델
+│   └── database/          # 상품·정책 DB 접근
+├── data/                  # 상품 및 문서 데이터
+├── frontend/              # 사용자 인터페이스
+├── requirements.txt
 └── README.md
-## 🧮 Policy Calculation
-✔ LTV (Loan-to-Value)
-조건	적용 LTV
-생애최초	최대 80%
-무주택/1주택	70%
-투기지역	40%
-조정대상지역	50%
-비규제지역	70%
-✔ DSR (Debt Service Ratio)
-DSR = (총부채 원리금 상환액 / 연소득) × 100
-은행권 기본 규제는 40%
+```
 
-✔ Final Loan Limit
-대출 가능 금액 = min( LTV 기반 가능액, DSR 기반 가능액 )
+> 위 구조는 README 작성을 위한 예시이며 실제 저장소 구조에 맞게 수정해야 합니다.
 
-## 🤖 LangGraph Reasoning Flow
+## 서비스 화면
 
-사용자 입력 파싱
+<!-- 실제 서비스 화면 또는 GIF 추가 -->
 
-결격요건 확인
+* 사용자 조건 입력
+* 추천 상품 목록
+* 상품별 추천 근거
+* 약관 및 정책 기반 후속 상담
 
-정책(LTV/DTI/DSR) 계산
+## 한계 및 개선 방향
 
-상품 후보군 생성(SQLite 기반)
+* 정형화되지 않은 금융 데이터를 자동으로 정제하는 파이프라인 구축
+* 정책 및 상품 정보의 정기적인 갱신 기능 추가
+* 추천 규칙과 가중치의 객관적인 평가 체계 마련
+* 복합적인 예외 상황을 처리할 수 있도록 상담 시나리오 확장
+* 사용자 피드백을 활용한 추천 기준 개선
 
-LangGraph Agent가 상품 비교 및 설명 생성
+## 유의사항
 
-결과 페이지로 렌더링
-
-## 🔧 Tech Stack
-
-Backend: FastAPI
-
-AI: LangChain, LangGraph, OpenAI API
-
-Database: SQLite
-
-Frontend: HTML(Jinja2 Templates)
-
-Environment: Python 3.10+
-
-## 🛠️ Future Improvements
-
-월 상환액 계산 및 상환 스케줄러 UI 추가
-
-우대금리 조건 자동 반영
-
-상품 DB 확장(은행별 금리 Tiers)
-
-대출 시나리오 기반 사용자 맞춤 금융 코치 기능
-
-
+본 서비스는 학습 목적으로 개발한 프로토타입입니다. 제공되는 추천 결과는 실제 금융 상담이나 대출 심사를 대체하지 않으며, 정확한 상품 조건은 해당 금융기관을 통해 확인해야 합니다.
